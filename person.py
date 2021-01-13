@@ -25,6 +25,7 @@ class Person:
         self.defence = defence
         self.powers = powers
         self.tools = tools
+        self.actions = ['Attack', 'Powers', 'Tools']
 
     def get_hp(self):
         return self.hp
@@ -49,6 +50,14 @@ class Person:
         if self.hp < 0:
             self.hp = 0
         return self.hp
+
+    def choose_action(self):
+        i = 1
+        print('\n\t'+self.name)
+        print('\t Actions:')
+        for action in self.actions:
+            print('\t\t'+str(i)+'.', action)
+            i += 1
 
     # Gives stats of avenger i.e, all things like coins and hp
     def get_stats(self):

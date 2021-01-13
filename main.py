@@ -46,7 +46,7 @@ antman = Person('Ant-Man\t', 3000, 100, 250, 40, avenger_powers, avenger_tools)
 thor = Person('Thor\t', 3500, 120, 300, 30, avenger_powers, avenger_tools)
 
 thanos = Person('Thanos\t', 20000, 500, 500, 30, [], [])
-loki = Person('Loki\t', 15000, 240, 500, 10, [], [])
+loki = Person('Loki\t', 13000, 240, 500, 10, [], [])
 
 
 avengers = [ironman, antman, thor]
@@ -55,7 +55,7 @@ villans = [thanos, loki]
 running = True
 i = 0
 
-print("A Villan ATTACKS!")
+print("Villans ATTACKS your Place!")
 
 while running:
     print("-----------------------------------------")
@@ -183,12 +183,15 @@ while running:
     if len(avengers) == 0 or len(villans) == 0:
         continue
     # Villan attacks back
-    tvillan = villans[random.randrange(0, len(villans))]
-    vdamage = tvillan.generate_damage()
-    tavenger = avengers[random.randrange(0, len(avengers))]
-    tavenger.take_damage(vdamage)
-    print(tvillan.name.replace('\t', '') +
-          ' attacked you for', vdamage, 'points of damage.')
-    if tavenger.get_hp() == 0:
-        print(tavenger.name+' has been defeated by the Villans.\n\nYou Lose!')
-        avengers.remove(tavenger)
+    i = 1
+    while i <= 2 or len(villans) == 0:
+        i += 1
+        tvillan = villans[random.randrange(0, len(villans))]
+        vdamage = tvillan.generate_damage()
+        tavenger = avengers[random.randrange(0, len(avengers))]
+        tavenger.take_damage(vdamage)
+        print(tvillan.name.replace('\t', '') +
+              ' attacked you for', vdamage, 'points of damage to '+tavenger.name)
+        if tavenger.get_hp() == 0:
+            print(tavenger.name+' has been defeated by the Villans.\n\nYou Lose!')
+            avengers.remove(tavenger)

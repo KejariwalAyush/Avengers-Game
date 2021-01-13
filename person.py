@@ -1,17 +1,6 @@
 import random
 
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-
 class Person:
     def __init__(self, name, hp, coins, attack, defence, powers, tools):
         super().__init__()
@@ -51,12 +40,26 @@ class Person:
             self.hp = 0
         return self.hp
 
+    def take_heal(self, heal):
+        self.hp += heal
+        if self.hp > self.maxhp:
+            self.hp = self.maxhp
+        return self.hp
+
     def choose_action(self):
         i = 1
         print('\n\t'+self.name)
         print('\t Actions:')
         for action in self.actions:
             print('\t\t'+str(i)+'.', action)
+            i += 1
+
+    def choose_power(self):
+        i = 1
+        print('\n\t'+self.name)
+        print('\t Powers:')
+        for power in self.powers:
+            print('\t\t'+str(i)+'.', power.name, '\tCosts:', power.cost)
             i += 1
 
     # Gives stats of avenger i.e, all things like coins and hp
@@ -112,9 +115,6 @@ class Person:
             current_coins = coins_string
 
         print("                       _________________________              __________ ")
-        # print(bcolors.BOLD + self.name + "    " +
-        #       current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
-        #       current_coins + " |" + bcolors.OKBLUE + coins_bar + bcolors.ENDC + "|")
         print(self.name + "    " + current_hp + " |" + hp_bar +
               "|    " + current_coins + " |" + coins_bar + "|")
 
@@ -145,8 +145,6 @@ class Person:
         else:
             current_hp = hp_string
 
-        print("                      __________________________________________________ ")
-        # print(bcolors.BOLD + self.name + "  " +
-        #       current_hp + " |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|")
+        print("                       __________________________________________________ ")
         print(self.name + "  " +
               current_hp + " |" + hp_bar + "|")

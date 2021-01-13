@@ -50,6 +50,7 @@ class Person:
             self.hp = 0
         return self.hp
 
+    # Gives stats of avenger i.e, all things like coins and hp
     def get_stats(self):
         hp_bar = ""
         bar_ticks = (self.hp / self.maxhp) * 100 / 4
@@ -58,14 +59,16 @@ class Person:
         coins_ticks = (self.coins / self.maxcoins) * 100 / 10
 
         while bar_ticks > 0:
-            hp_bar += "█"
+            # hp_bar += "█"
+            hp_bar += "#"
             bar_ticks -= 1
 
         while len(hp_bar) < 25:
             hp_bar += " "
 
         while coins_ticks > 0:
-            coins_bar += "█"
+            # coins_bar += "█"
+            coins_bar += "#"
             coins_ticks -= 1
 
         while len(coins_bar) < 10:
@@ -99,7 +102,42 @@ class Person:
         else:
             current_coins = coins_string
 
-        print("                     _________________________              __________ ")
-        print(bcolors.BOLD + self.name + "    " +
-              current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
-              current_coins + " |" + bcolors.OKBLUE + coins_bar + bcolors.ENDC + "|")
+        print("                       _________________________              __________ ")
+        # print(bcolors.BOLD + self.name + "    " +
+        #       current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
+        #       current_coins + " |" + bcolors.OKBLUE + coins_bar + bcolors.ENDC + "|")
+        print(self.name + "    " + current_hp + " |" + hp_bar +
+              "|    " + current_coins + " |" + coins_bar + "|")
+
+    # Gives a stats of enemy i.e, only hp
+    def get_enemy_stats(self):
+        hp_bar = ""
+        bar_ticks = (self.hp / self.maxhp) * 100 / 2
+
+        while bar_ticks > 0:
+            # hp_bar += "█"
+            hp_bar += "#"
+            bar_ticks -= 1
+
+        while len(hp_bar) < 50:
+            hp_bar += " "
+
+        hp_string = str(self.hp) + "/" + str(self.maxhp)
+        current_hp = ""
+
+        if len(hp_string) < 11:
+            decreased = 11 - len(hp_string)
+
+            while decreased > 0:
+                current_hp += " "
+                decreased -= 1
+
+            current_hp += hp_string
+        else:
+            current_hp = hp_string
+
+        print("                      __________________________________________________ ")
+        # print(bcolors.BOLD + self.name + "  " +
+        #       current_hp + " |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|")
+        print(self.name + "  " +
+              current_hp + " |" + hp_bar + "|")

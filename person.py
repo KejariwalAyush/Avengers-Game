@@ -62,6 +62,15 @@ class Person:
             print('\t\t'+str(i)+'.', power.name, '\tCosts:', power.cost)
             i += 1
 
+    def choose_tools(self):
+        i = 1
+        print('\n\t'+self.name)
+        print('\t Tools:')
+        for tool in self.tools:
+            print('\t\t'+str(i)+'.', tool['tool'].name,
+                  '(', tool['qty'], 'x)', '\tDesc:', tool['tool'].desc)
+            i += 1
+
     # Gives stats of avenger i.e, all things like coins and hp
     def get_stats(self):
         hp_bar = ""

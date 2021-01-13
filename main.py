@@ -14,8 +14,34 @@ drink = Power('Boost HP', 5, 150, 'good')
 ironman_powers = [thunder, ironfist, robo, charge, drink]
 # Add loki powers as well
 
+# Tools for persons
+hammer = Tool('Hammer', 'bad', 'Damages 900 HP of enemy.', 900)
+granade = Tool('Granade', 'bad', 'Damage 1200 HP', 1200)
+arrow = Tool('Arrow', 'bad', 'Damages 600 HP', 600)
+
+mediCare = Tool('MediCare', 'good',
+                'Heals 500 HP and protects you from next damage', 500)
+health = Tool('Health', 'good', 'Heals 1000 HP', 1000)
+superhealth = Tool('Super-Health', 'good', 'Heals max HP possible', 99999)
+
+sheild = Tool('Sheild', 'both',
+              'Nullify next Villan attack & damage them with 200 HP', 200)
+sheildpro = Tool('SheildPro', 'both',
+                 'Nullify next Villan attack & damage them with 1500 HP', 1500)
+
+ironman_tools = [
+    {'tool': hammer, 'qty': 10},
+    {'tool': granade, 'qty': 5},
+    {'tool': arrow, 'qty': 15},
+    {'tool': mediCare, 'qty': 10},
+    {'tool': health, 'qty': 5},
+    {'tool': superhealth, 'qty': 2},
+    {'tool': sheild, 'qty': 15},
+    {'tool': sheildpro, 'qty': 3},
+]
+
 # Initiate Persons
-ironman = Person('Iron-Man', 4000, 150, 350, 50, ironman_powers, [])
+ironman = Person('Iron-Man', 4000, 150, 350, 50, ironman_powers, ironman_tools)
 # antman = Person('Ant-Man\t', 3000, 100, 250, 40, [], [])
 # thor = Person('Thor\t', 3500, 120, 300, 30, [], [])
 
@@ -54,6 +80,7 @@ while running:
         if loki.get_hp() == 0:
             print(loki.name.replace('\t', '') + ' has Died.'+'\n\nYou Win!')
             running = False
+            continue
 
     # for use of powers
     elif choice == 1:
@@ -79,18 +106,50 @@ while running:
             continue
         elif power.type == 'bad':
             loki.take_damage(pdamage)
-            print('You used '+power.name+' for', pdamage, 'points for damage')
+            print('You used '+power.name+' for', pdamage, 'points of damage')
 
         if loki.get_hp() == 0:
             print(loki.name.replace('\t', '') + ' has Died.'+'\n\nYou Win!')
             running = False
+            continue
 
     # for use of tools
     elif choice == 2:
-        continue
+        ironman.choose_tools()
+        tool_choice = int(input('\tChoose Tool: ')) - 1
 
-    else:
-        running = False
+        if tool_choice == -1:
+            continue
+
+        tool = ironman.tools[tool_choice]['tool']
+        ironman.tools[tool_choice]['qty'] -= 1
+
+        if tool.type == 'bad':
+            loki.take_damage(tool.prop)
+            print('You used ' + tool.name+' for',
+                  tool.prop, 'points of damage')
+        elif tool.type == 'good':
+            ironman.take_heal(tool.prop)
+            print('You used ' + tool.name+' for',
+                  tool.prop, 'points for healing yourself')
+            if tool.name == 'MediCare':
+                continue
+        else:
+            loki.take_damage(tool.prop)
+            print('You used '+tool.name+' for' + tool.desc)
+            if loki.get_hp() == 0:
+                print(loki.name.replace('\t', '') +
+                      ' has Died.'+'\n\nYou Win!')
+                running = False
+            continue
+
+        if loki.get_hp() == 0:
+            print(loki.name.replace('\t', '') + ' has Died.'+'\n\nYou Win!')
+            running = False
+            continue
+
+    # else:
+    #     running = False
 
     # Villan attacks back
     vdamage = loki.generate_damage()

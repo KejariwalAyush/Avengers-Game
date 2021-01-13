@@ -92,7 +92,12 @@ while running:
         if len(villans) == 0 or len(avengers) == 0:
             break
         avenger.choose_action()
-        choice = int(input("    Choose action: ")) - 1
+        inp = input("    Choose action: ")
+        if inp == 'quit':
+            print('\n\nThanks for playing AVENGERS, See you Soon!\n')
+            running = False
+            exit(0)
+        choice = int(inp) - 1
 
         tvillan = villans[random.randrange(0, len(villans))]
 
